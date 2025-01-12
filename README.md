@@ -49,7 +49,7 @@ root_dir_folder/
 + **output_dir**: Str. The path where the extractor saves the result csv file.
 + **mask_file_name**: Str. The name of mask file (e.g., `mask.nii.gz`). Mask file format supported by `SimpleITK.ReadImage()` will be supported in this module. The mask should be a 3D array contains only 0 or 1.
 + **image_file_names**: Dict. Image names associated with file names in the form `{image_name: image_file_name}` (e.g., `{'modality_1':'image_1.nii.gz', 'modality_2':'image_2.nii.gz'}`). Image file format supported by `SimpleITK.ReadImage()` will be supported in this module. The image should be a 3D array that matches with the mask.
-+ **percentiles**: List, default=[5, 25, 50, 75, 95],. List of percentiles to extract.
++ **percentiles**: List, default=[5, 25, 50, 75, 95]. List of percentiles to extract.
 + **slice_statistics**: Bool. Specifies if the features should be extracted slice by slice (i.e. 2D extraction).
 
 ### *ValueExtract.ValueExtractor.set_mask_filters(self, filters:Dict[str, Tuple]=None)*
