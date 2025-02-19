@@ -59,3 +59,42 @@ Exclude outlier pixels from the mask.
 ### *ValueExtract.ValueExtractor.run(self, cpus=1)*
 Run extraction and save the result csv file.
 + **cups**: int, default=1. The number of processes for extraction. See [`multiprocessing.Pool`](https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool) for details.
+
+### *test_if_match(root_dir:str, mask_file_name:str, image_file_names:Dict[str, str])*
+Detect size mismatch between the mask and images.
++ **root_dir**: str. The path of the image folder. This folder should be structured like this:
+```
+root_dir_folder/
+│── patient_1
+│    ├── mask.nii.gz
+│    ├── image_1.nii.gz
+│    ├── image_2.nii.gz
+│    └── image_n.nii.gz
+│── patient_2
+│    ├── mask.nii.gz
+│    ├── image_1.nii.gz
+│    ├── image_2.nii.gz
+│    └── image_n.nii.gz
+└── patient_n
+     ├── mask.nii.gz
+     ├── image_1.nii.gz
+     ├── image_2.nii.gz
+     └── image_n.nii.gz
+```
++ **mask_file_name**: Str. The name of mask file (e.g., `mask.nii.gz`). Mask file format supported by `SimpleITK.ReadImage()` will be supported in this module. The mask should be a 3D array contains only 0 or 1.
++ **image_file_names**: Dict. Image names associated with file names in the form `{image_name: image_file_name}` (e.g., `{'modality_1':'image_1.nii.gz', 'modality_2':'image_2.nii.gz'}`). Image file format supported by `SimpleITK.ReadImage()` will be supported in this module. The image should be a 3D array that matches with the mask.
+
+```python
+from ValueExtract import test_if_match
+
+if __name__ == '__main__': # must write this line when using multiple processes
+    test_if_match(
+        root_dir='path/to/your/image/folder', 
+        mask_file_name='IVIM-mask.nii.gz', 
+        image_file_names={
+            'D': 'D.nii.gz', 
+            'D*': 'D-star.nii.gz', 
+            'f': 'f.nii.gz', 
+            }
+        )
+```
