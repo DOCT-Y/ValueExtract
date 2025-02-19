@@ -1,4 +1,4 @@
-# version:20240819
+# version:20250219 update test_if_match function to detect mismatch between mask and images.
 import numpy as np
 import pandas as pd
 from scipy.stats import kurtosis, skew
@@ -52,6 +52,39 @@ def compute_statistics(arr:np.ndarray, mask:np.ndarray, prefix:str='', percentil
             prefix=f'{prefix}-slice-{slice_ind}', 
             percentiles=percentiles
             ))
+
+
+def test_if_match(root_dir:str, mask_file_name:str, image_file_names:Dict[str, str]):
+    percentiles = percentiles
+
+    image_file_names = list(image_file_names.values())
+
+    checklist = [mask_file_name] + image_file_names
+
+    cases = os.listdir(root_dir)
+    cases.sort()
+
+    for case in cases:
+        file_dir_list = {k:False for k in checklist}
+
+        for dirpath, dirnames, filenames in os.walk(os.path.join(root_dir, case)):
+            for filename in filenames:
+                if filename in file_dir_list:
+                    file_dir_list[filename] = os.path.join(dirpath, filename)
+        
+        if all(file_dir_list.values()):
+            for file_1_name, file_1_dir in file_dir_list.items():
+                for file_2_name, file_2_dir in file_dir_list.items():
+                    if file_1_name == file_2_name:
+                        continue
+
+                    data_1 = sitk.ReadImage(file_1_dir)
+                    data_2 = sitk.ReadImage(file_2_dir)
+
+                    data_1_size = data_1.GetSize()
+                    data_2_size = data_2.GetSize()
+                    if data_1_size != data_2_size:
+                        print(f'size mismatch in {file_1_dir} (size: {data_1_size}) and {file_2_dir} (size: {data_1_size})')
 
 
 class ValueExtractor:
