@@ -82,7 +82,7 @@ def test_if_match(root_dir:str, mask_file_name:str, image_file_names:Dict[str, s
                     data_1_size = data_1.GetSize()
                     data_2_size = data_2.GetSize()
                     if data_1_size != data_2_size:
-                        print(f'size mismatch in {file_1_dir} (size: {data_1_size}) and {file_2_dir} (size: {data_1_size})')
+                        print(f'size mismatch in {file_1_dir} (size: {data_1_size}) and {file_2_dir} (size: {data_2_size})')
 
 
 class ValueExtractor:
