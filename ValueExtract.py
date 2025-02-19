@@ -55,8 +55,6 @@ def compute_statistics(arr:np.ndarray, mask:np.ndarray, prefix:str='', percentil
 
 
 def test_if_match(root_dir:str, mask_file_name:str, image_file_names:Dict[str, str]):
-    percentiles = percentiles
-
     image_file_names = list(image_file_names.values())
 
     checklist = [mask_file_name] + image_file_names
